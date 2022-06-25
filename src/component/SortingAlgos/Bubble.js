@@ -1,30 +1,18 @@
-import React from "react";
+export default function bubble(demoArr, setDemoArr) {
+  console.log("inside bubble");
+  for (let i = 0; i < demoArr.length - 1; i++) {
+    for (let j = 0; j < demoArr.length - i - 1; j++) {
+      if (demoArr[j].props.style.height > demoArr[j + 1].props.style.height) {
+        let a = demoArr[j];
+        let b = demoArr[j + 1];
 
-const Bubble = ({}) => {
-  return <div>Bubble</div>;
-};
+        demoArr[j] = b;
+        demoArr[j + 1] = a;
+        let curr_miliseconds = Date.now();
 
-export default Bubble;
-
-// export default async function bubble(finalBar, setFinalBar) {
-
-//   console.log("the final bar in bubble is ", finalBar);
-
-//   for (var i = 0; i < finalBar.length - 1; i++) {
-//     for (var j = 0; j < finalBar.length - i - 1; j++) {
-//       if (finalBar[j].props.style.height > finalBar[j + 1].props.style.height) {
-//         var a = finalBar[j];
-//         var b = finalBar[j + 1];
-
-//         setFinalBar((prev) => {
-//           prev[j] = b;
-//           prev[j + 1] = a;
-//         });
-//         console.log("the finalBar inside bubble is ", finalBar);
-//         break;
-//         // finalBar[j] = b;
-//         // finalBar[j + 1] = a;
-//       }
-//     }
-//   }
-// }
+        while (Date.now() - curr_miliseconds < 500) {}
+        setDemoArr(demoArr);
+      }
+    }
+  }
+}

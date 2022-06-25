@@ -1,6 +1,6 @@
 import React from "react";
 
-function numbers(j) {
+export function numbers(j) {
   var s = [];
   for (let i = 0; i < j; i++) {
     s.push(Math.random() * 350);
@@ -9,12 +9,10 @@ function numbers(j) {
   return s;
 }
 
-export function demoBarChart(range) {
-  let nums = numbers(range);
-
+export function demoBarChart(nums) {
   const final = [];
 
-  nums.map((item, index) => {
+  nums.forEach((item, index) => {
     final.push(
       <div className="scraper" key={index} style={{ height: item }}></div>
     );

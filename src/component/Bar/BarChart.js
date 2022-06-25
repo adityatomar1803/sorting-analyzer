@@ -1,41 +1,40 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/AppProvider";
-import { demoBarChart } from "./DemoBarChart";
+import bubble from "../SortingAlgos/Bubble";
+import { demoBarChart, numbers } from "./DemoBarChart";
+import YetAnotherChart from "./YetAnotherChart";
 
 const BarChart = () => {
   const { state } = useContext(AppContext);
   const [play, setPlay] = useState(false);
-  const [finalBar, setFinalBar] = useState([]);
+  const [finalNumbers, setFinalBar] = useState(() => numbers(state.range));
+  // const [finalBar, setFinalBar] = useState(() => demoBarChart(state.range));
+
+  // function setBar(new_bar) {
+  //   console.log("setBar ran");
+  //   setFinalBar((prev) => new_bar);
+  // }
 
   useEffect(() => {
-    setFinalBar(demoBarChart(state.range));
+    setFinalBar(numbers(state.range));
   }, [state.range]);
 
-  console.log("the state is ", finalBar);
+  console.log("the state is ", finalNumbers);
 
-  function onPlayClick() {
-    setPlay((prev) => !prev);
-    for (let i = 0; i < finalBar.length - 1; i++) {
-      for (let j = 0; j < finalBar.length - i - 1; j++) {
-        if (
-          finalBar[j].props.style.height > finalBar[j + 1].props.style.height
-        ) {
-          var d = finalBar[j];
-          setFinalBar((prev) => [
-            ...prev.slice(0, j - 1),
-            prev[j + 1],
-            d,
-            ...prev.slice(j + 1),
-          ]);
-        }
-      }
-    }
-  }
+  // function onPlayClick() {
+  // let demoBar = finalBar.slice();
+
+  // setPlay((prev) => !prev);
+
+  // bubble(demoBar, setBar);
+  // }
 
   return (
     <div className="closingDiv">
-      <div className="barDiv">{finalBar}</div>
-      <button className="btn" onClick={onPlayClick}>
+      <div className="barDiv">
+        <YetAnotherChart demoBar={finalNumbers.slice()} sort={play} />
+      </div>
+      <button className="btn" onClick={() => setPlay((prev) => !prev)}>
         {play ? "Stop" : "Play"}
       </button>
     </div>
