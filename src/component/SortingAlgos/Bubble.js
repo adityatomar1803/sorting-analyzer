@@ -1,18 +1,43 @@
-export default function bubble(demoArr, setDemoArr) {
-  console.log("inside bubble");
+import { ACTION_TYPES } from "../../context/ActionTypes";
+
+export default function bubble(demoArr, dispatch, state, setPlay) {
+  console.log("inside bubble", dispatch);
+
+  let collection = document.getElementsByClassName("scraper");
   for (let i = 0; i < demoArr.length - 1; i++) {
-    for (let j = 0; j < demoArr.length - i - 1; j++) {
-      if (demoArr[j].props.style.height > demoArr[j + 1].props.style.height) {
-        let a = demoArr[j];
-        let b = demoArr[j + 1];
+    setTimeout(() => {
+      for (let j = 0; j < demoArr.length - i - 1; j++) {
+        setTimeout(() => {
+          collection[j].style.backgroundColor = "blue";
 
-        demoArr[j] = b;
-        demoArr[j + 1] = a;
-        let curr_miliseconds = Date.now();
+          setTimeout(() => {
+            collection[j].style.backgroundColor = "pink";
+            collection[j + 1].style.backgroundColor = "blue";
+          }, state.speed);
 
-        while (Date.now() - curr_miliseconds < 500) {}
-        setDemoArr(demoArr);
+          if (demoArr[j] > demoArr[j + 1]) {
+            let a = demoArr[j];
+            let b = demoArr[j + 1];
+
+            demoArr[j] = b;
+            demoArr[j + 1] = a;
+
+            dispatch({ type: ACTION_TYPES.NUMBERS, payload: demoArr });
+          }
+        }, (i * demoArr.length + (j + 1)) * state.speed);
       }
-    }
+    }, (i + 1) * state.speed);
   }
+  setTimeout(() => {
+    console.log("set timeout ran");
+    collection[0].style.backgroundColor = "blue";
+    for (let i = 0; i < demoArr.length; i++) {
+      setTimeout(() => {
+        collection[i].style.backgroundColor = "green";
+      }, (i * state.speed) / 2 + 500);
+    }
+    setTimeout(() => {
+      setPlay((prev) => !prev);
+    }, (demoArr.length * state.speed) / 2 + 1000);
+  }, demoArr.length * demoArr.length * state.speed);
 }

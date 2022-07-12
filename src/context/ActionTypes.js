@@ -4,4 +4,5 @@ export const ACTION_TYPES = {
   CATEGORY: "category",
   SPEED: "speed",
   THEME: "theme",
+  NUMBERS: "change-number",
 };

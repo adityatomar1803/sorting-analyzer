@@ -1,7 +1,6 @@
-import React from "react";
-
-export function numbers(j) {
-  var s = [];
+export function generateNumbers(j) {
+  console.log("inside helper");
+  let s = [];
   for (let i = 0; i < j; i++) {
     s.push(Math.random() * 350);
   }
@@ -9,7 +8,7 @@ export function numbers(j) {
   return s;
 }
 
-export function demoBarChart(nums) {
+export function generateChart(nums) {
   const final = [];
 
   nums.forEach((item, index) => {

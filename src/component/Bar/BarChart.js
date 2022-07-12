@@ -1,40 +1,52 @@
 import React, { useContext, useEffect, useState } from "react";
+
 import { AppContext } from "../../context/AppProvider";
+import { generateChart } from "../../Helpers";
 import bubble from "../SortingAlgos/Bubble";
-import { demoBarChart, numbers } from "./DemoBarChart";
-import YetAnotherChart from "./YetAnotherChart";
+import { merge_sort } from "../SortingAlgos/Merge";
+import selection from "../SortingAlgos/Selection";
 
 const BarChart = () => {
-  const { state } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
   const [play, setPlay] = useState(false);
-  const [finalNumbers, setFinalBar] = useState(() => numbers(state.range));
-  // const [finalBar, setFinalBar] = useState(() => demoBarChart(state.range));
 
-  // function setBar(new_bar) {
-  //   console.log("setBar ran");
-  //   setFinalBar((prev) => new_bar);
-  // }
+  const [chart, setChart] = useState(state.numbers);
 
   useEffect(() => {
-    setFinalBar(numbers(state.range));
-  }, [state.range]);
+    console.log(" useEffect ran");
+    setChart((prev) => state.numbers);
+  }, [state.numbers]);
 
-  console.log("the state is ", finalNumbers);
+  function onPlayClick() {
+    let demoBar = state.numbers.slice();
 
-  // function onPlayClick() {
-  // let demoBar = finalBar.slice();
+    setPlay((prev) => !prev);
 
-  // setPlay((prev) => !prev);
+    console.log(dispatch);
 
-  // bubble(demoBar, setBar);
-  // }
+    switch (state.algo) {
+      case "bubble":
+        bubble(demoBar, dispatch, state, setPlay);
+        break;
+      case "selection":
+        selection(demoBar, dispatch, state, setPlay);
+        break;
+      case "merge":
+        merge_sort(demoBar, dispatch, state, setPlay);
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  console.log(typeof state.range, state.numbers);
 
   return (
     <div className="closingDiv">
-      <div className="barDiv">
-        <YetAnotherChart demoBar={finalNumbers.slice()} sort={play} />
-      </div>
-      <button className="btn" onClick={() => setPlay((prev) => !prev)}>
+      {console.log("return ran")}
+      <div className="barDiv">{generateChart(chart)}</div>
+      <button className="btn" onClick={onPlayClick}>
         {play ? "Stop" : "Play"}
       </button>
     </div>

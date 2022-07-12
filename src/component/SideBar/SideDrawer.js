@@ -1,33 +1,35 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { ACTION_TYPES } from "../../context/ActionTypes";
 import { AppContext } from "../../context/AppProvider";
+import { generateNumbers } from "../../Helpers";
 
 export default function SideDrawer() {
   const { state, dispatch } = useContext(AppContext);
 
-  const [sortSelect, setSortSelect] = useState(state.algo);
-  const [range, setRange] = useState(state.range);
-  const [category, setCategory] = useState(state.category);
-  const [speed, setSpeed] = useState(state.speed);
+  useEffect(() => {
+    dispatch({
+      type: ACTION_TYPES.NUMBERS,
+      payload: generateNumbers(state.range),
+    });
+  }, [dispatch, state.range]);
 
   const onRangeChange = (e) => {
-    setRange((prev) => e.target.value);
-
     dispatch({ type: ACTION_TYPES.RANGE, payload: e.target.value });
+    dispatch({
+      type: ACTION_TYPES.NUMBERS,
+      payload: generateNumbers(e.target.value),
+    });
   };
 
   const onCategoryChange = (e) => {
-    setCategory((prev) => e.target.value);
     dispatch({ type: ACTION_TYPES.CATEGORY, payload: e.target.value });
   };
 
   const onSortSelect = (e) => {
-    setSortSelect((prev) => e.target.value);
     dispatch({ type: ACTION_TYPES.ALGO, payload: e.target.value });
   };
 
   const onSpeedSelect = (e) => {
-    setSpeed((prev) => e.target.value);
     dispatch({ type: ACTION_TYPES.SPEED, payload: e.target.value });
   };
 
@@ -41,7 +43,6 @@ export default function SideDrawer() {
         id="sorting-algo"
         name="sorting-algo"
         className="options"
-        value={sortSelect}
         onChange={(e) => onSortSelect(e)}
       >
         <option value="bubble">Bubble</option>
@@ -59,7 +60,8 @@ export default function SideDrawer() {
         id="range"
         name="range"
         min={2}
-        value={range}
+        max={70}
+        value={state.range}
         onChange={(e) => onRangeChange(e)}
       ></input>
 
@@ -71,7 +73,7 @@ export default function SideDrawer() {
         id="category"
         name="category"
         className="options"
-        value={category}
+        value={state.category}
         onChange={(e) => onCategoryChange(e)}
       >
         <option value="unsorted">Unsorted</option>
@@ -87,7 +89,15 @@ export default function SideDrawer() {
         id="speed"
         name="speed"
         className="options"
-        value={speed}
+        value={
+          state.speed === 500
+            ? "slow"
+            : state.speed === 250
+            ? "medium"
+            : state.speed === 100
+            ? "fast"
+            : "ultra-fast"
+        }
         onChange={(e) => onSpeedSelect(e)}
       >
         <option value="slow">Slow</option>

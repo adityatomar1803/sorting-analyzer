@@ -3,7 +3,8 @@ export const INITIAL_STATE = {
   algo: "bubble",
   range: 10,
   category: "unsorted",
-  speed: "fast",
+  speed: 100,
+  numbers: [],
 };
 
 //also bar graph value should be calculated

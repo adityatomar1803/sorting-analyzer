@@ -20,7 +20,11 @@ export default function Header() {
         <li>
           <img src={logo} alt="logo" height={20} />
         </li>
-        <li> Sorting </li>
+        <li>
+          <div>
+            Sorting <div> Visualizer</div>
+          </div>
+        </li>
         <li onClick={onThemeSelect}>{theme ? <BsMoonFill /> : <BsMoon />} </li>
       </ul>
     </div>
