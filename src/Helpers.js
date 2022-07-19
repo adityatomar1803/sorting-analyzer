@@ -1,5 +1,4 @@
 export function generateNumbers(j) {
-  console.log("inside helper");
   let s = [];
   for (let i = 0; i < j; i++) {
     s.push(Math.random() * 350);

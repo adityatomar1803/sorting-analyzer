@@ -1,8 +1,6 @@
 import { ACTION_TYPES } from "../../context/ActionTypes";
 
 export default function bubble(demoArr, dispatch, state, setPlay) {
-  console.log("inside bubble", dispatch);
-
   let collection = document.getElementsByClassName("scraper");
   for (let i = 0; i < demoArr.length - 1; i++) {
     setTimeout(() => {
@@ -28,8 +26,8 @@ export default function bubble(demoArr, dispatch, state, setPlay) {
       }
     }, (i + 1) * state.speed);
   }
+
   setTimeout(() => {
-    console.log("set timeout ran");
     collection[0].style.backgroundColor = "blue";
     for (let i = 0; i < demoArr.length; i++) {
       setTimeout(() => {

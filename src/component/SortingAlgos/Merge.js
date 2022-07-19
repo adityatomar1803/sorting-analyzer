@@ -1,7 +1,6 @@
 import { ACTION_TYPES } from "../../context/ActionTypes";
 
 function merge(arr, left, mid, right, dispatch) {
-  console.log("marge called");
   let collection = document.getElementsByClassName("scraper");
   let leftSubArr = arr.slice(left, mid + 1);
   let rightSubArr = arr.slice(mid + 1, right + 1);
@@ -41,21 +40,17 @@ let des = 0;
 // let img = 9;
 function sort(arr, left, right, dispatch, timer) {
   let mid = parseInt((left + right) / 2);
-  console.log(mid);
   if (left >= right) return;
   sort(arr, left, mid);
   sort(arr, mid + 1, right);
 
   des++;
   setTimeout(() => {
-    console.log("the arr, left, mid, right is", arr, left, mid, right);
     merge(arr, left, mid, right, dispatch);
-    console.log("des is ", des);
     dispatch({ type: ACTION_TYPES.NUMBERS, payload: arr });
   }, des * 500);
 }
 
 export function merge_sort(demoArr, dispatch, state) {
-  console.log("the dispatch is ", dispatch);
   sort(demoArr, 0, demoArr.length - 1, dispatch);
 }

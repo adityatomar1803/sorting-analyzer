@@ -1,41 +1,52 @@
 import { ACTION_TYPES } from "../../context/ActionTypes";
 
-export default function selection(demoArr, dispatch, state) {
-  console.log("inside selection", dispatch);
-
+export default function selection(demoArr, dispatch, state, setPlay) {
   let collection = document.getElementsByClassName("scraper");
+  let len = demoArr.length;
 
-  function calculateTimeout(len, i, j) {
-    let wait;
-    for (let k = 0; k <= i; k++) {
-      wait += len;
-      len -= 1;
-    }
-    return wait + j - i;
-  }
-
-  for (let i = 0; i < demoArr.length; i++) {
+  for (let i = 0; i < len; i++) {
     setTimeout(() => {
       let smallest_index = i;
-      for (let j = i; j < demoArr.length; j++) {
+
+      for (let j = i; j < len; j++) {
         setTimeout(() => {
-          if (demoArr[j] < demoArr[smallest_index]) {
-            smallest_index = j;
-          }
           collection[smallest_index].style.backgroundColor = "blue";
-          console.log(Date.now());
-        }, (demoArr.length * i + j - 1) * state.speed);
+
+          if (j > i) {
+            collection[j - 1].style.backgroundColor = "pink";
+            collection[j].style.backgroundColor = "red";
+          }
+
+          if (demoArr[j] < demoArr[smallest_index]) {
+            collection[smallest_index].style.backgroundColor = "pink";
+            smallest_index = j;
+            collection[smallest_index].style.backgroundColor = "blue";
+          }
+          // }, (j * state.speed * 20) / 10);
+        }, j * state.speed * 2);
       }
 
-      let scapeGoat = demoArr[i];
-      demoArr[i] = demoArr[smallest_index];
-      demoArr[smallest_index] = scapeGoat;
-      console.log("inside setTimeout");
-      dispatch({ type: ACTION_TYPES.NUMBERS, payload: demoArr });
-    }, (i + 1) * state.speed);
+      setTimeout(() => {
+        let scapegoat = demoArr[i];
+        demoArr[i] = demoArr[smallest_index];
+        demoArr[smallest_index] = scapegoat;
+        dispatch({ type: ACTION_TYPES.NUMBERS, payload: demoArr });
+        collection[smallest_index].style.backgroundColor = "pink";
+        collection[len - 1].style.backgroundColor = "pink";
+        collection[i].style.backgroundColor = "blue";
+      }, state.speed * len * 2);
+    }, i * state.speed * len * 2);
   }
 
-  //   setTimeout(() => {
-  //     console.log("the array after selection is", demoArr);
-  //   }, (demoArr.length + 1) * state.speed + 1000);
+  setTimeout(() => {
+    // collection[0].style.backgroundColor = "blue";
+    for (let i = 0; i < len; i++) {
+      setTimeout(() => {
+        collection[i].style.backgroundColor = "green";
+      }, (i * state.speed) / 2 + 500);
+    }
+    setTimeout(() => {
+      setPlay((prev) => !prev);
+    }, (len * state.speed) / 2 + 1000);
+  }, len * len * state.speed * 2 + 1000);
 }

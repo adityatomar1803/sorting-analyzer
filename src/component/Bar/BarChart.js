@@ -6,14 +6,13 @@ import bubble from "../SortingAlgos/Bubble";
 import { merge_sort } from "../SortingAlgos/Merge";
 import selection from "../SortingAlgos/Selection";
 
-const BarChart = () => {
+const BarChart = ({ setReset }) => {
   const { state, dispatch } = useContext(AppContext);
   const [play, setPlay] = useState(false);
 
   const [chart, setChart] = useState(state.numbers);
 
   useEffect(() => {
-    console.log(" useEffect ran");
     setChart((prev) => state.numbers);
   }, [state.numbers]);
 
@@ -21,8 +20,6 @@ const BarChart = () => {
     let demoBar = state.numbers.slice();
 
     setPlay((prev) => !prev);
-
-    console.log(dispatch);
 
     switch (state.algo) {
       case "bubble":
@@ -38,13 +35,11 @@ const BarChart = () => {
       default:
         break;
     }
+    setReset(true);
   }
-
-  console.log(typeof state.range, state.numbers);
 
   return (
     <div className="closingDiv">
-      {console.log("return ran")}
       <div className="barDiv">{generateChart(chart)}</div>
       <button className="btn" onClick={onPlayClick}>
         {play ? "Stop" : "Play"}

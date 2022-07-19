@@ -3,7 +3,7 @@ import { ACTION_TYPES } from "../../context/ActionTypes";
 import { AppContext } from "../../context/AppProvider";
 import { generateNumbers } from "../../Helpers";
 
-export default function SideDrawer() {
+export default function SideDrawer({ resetChart, shouldReset, setReset }) {
   const { state, dispatch } = useContext(AppContext);
 
   useEffect(() => {
@@ -14,6 +14,10 @@ export default function SideDrawer() {
   }, [dispatch, state.range]);
 
   const onRangeChange = (e) => {
+    if (shouldReset) {
+      resetChart();
+      setReset(false);
+    }
     dispatch({ type: ACTION_TYPES.RANGE, payload: e.target.value });
     dispatch({
       type: ACTION_TYPES.NUMBERS,
