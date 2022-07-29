@@ -4,6 +4,7 @@ import { AppContext } from "../../context/AppProvider";
 import { generateChart } from "../../Helpers";
 import bubble from "../SortingAlgos/Bubble";
 import { merge_sort } from "../SortingAlgos/Merge";
+import { quickSort } from "../SortingAlgos/Quick";
 import selection from "../SortingAlgos/Selection";
 
 const BarChart = ({ setReset }) => {
@@ -31,7 +32,9 @@ const BarChart = ({ setReset }) => {
       case "merge":
         merge_sort(demoBar, dispatch, state, setPlay);
         break;
-
+      case "quick":
+        quickSort(demoBar, dispatch, state, setPlay);
+        break;
       default:
         break;
     }

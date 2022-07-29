@@ -13,7 +13,9 @@ export default function selection(demoArr, dispatch, state, setPlay) {
           collection[smallest_index].style.backgroundColor = "blue";
 
           if (j > i) {
-            collection[j - 1].style.backgroundColor = "pink";
+            if (collection[j - 1].style.backgroundColor !== "blue") {
+              collection[j - 1].style.backgroundColor = "pink";
+            }
             collection[j].style.backgroundColor = "red";
           }
 
