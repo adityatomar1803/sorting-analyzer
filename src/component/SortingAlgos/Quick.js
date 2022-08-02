@@ -5,6 +5,7 @@ export function quickSort(demoArr, dispatch, state, setPlay) {
   let collection = document.getElementsByClassName("scraper");
   demoArr = [...demoArr, Infinity];
   let low = 0,
+    // high = demoArr.length;
     high = demoArr.length - 1;
   quick(low, high);
 
@@ -13,45 +14,67 @@ export function quickSort(demoArr, dispatch, state, setPlay) {
       j = high;
 
     let pivot = demoArr[low];
-    // collection[low].style.backgroundColor = "blue";
-
+    setTimeout(() => {
+      collection[low].style.backgroundColor = "blue";
+    }, ++delay * state.speed * 2);
     while (i < j) {
       do {
-        // setTimeout(() => {
-        // collection[i - 1].style.backgroundColor = "pink";
-        // collection[i].style.backgroundColor = "yellow";
         i++;
-        // }, ++delay * state.speed * 4);
+        let f = i;
+        setTimeout(() => {
+          if (collection[f - 1].style.backgroundColor !== "blue") {
+            collection[f - 1].style.backgroundColor = "pink";
+          }
+          if (collection[f].style.backgroundColor !== "orange") {
+            collection[f].style.backgroundColor = "yellow";
+          }
+        }, ++delay * state.speed * 2);
       } while (demoArr[i] <= pivot);
       do {
-        // setTimeout(() => {
-        // collection[j - 1].style.backgroundColor = "pink";
-        // collection.style.backgroundColor = "red";
         j--;
-        // }, ++delay * state.speed * 4);
+        let f = j;
+        setTimeout(() => {
+          if (collection[f + 1].style.backgroundColor === "red") {
+            collection[f + 1].style.backgroundColor = "pink";
+          }
+          if (collection[f].style.backgroundColor !== "orange") {
+            collection[f].style.backgroundColor = "red";
+          }
+        }, ++delay * state.speed * 2);
       } while (demoArr[j] > pivot);
 
-      // setTimeout(() => {
       if (i < j) {
         let scapeGoat = demoArr[i];
         demoArr[i] = demoArr[j];
         demoArr[j] = scapeGoat;
+        let f = i,
+          k = j;
+
+        let anotherDemoArr = demoArr.slice();
+
+        setTimeout(() => {
+          collection[f].style.backgroundColor = "pink";
+          collection[k].style.backgroundColor = "pink";
+          dispatch({
+            type: ACTION_TYPES.NUMBERS,
+            payload: anotherDemoArr.slice(0, -1),
+          });
+        }, ++delay * state.speed * 2);
       }
-      // }, ++delay * state.speed * 4);
     }
 
-    let demo;
-    // setTimeout(() => {
     let scapeGoat = demoArr[low];
     demoArr[low] = demoArr[j];
     demoArr[j] = scapeGoat;
-    demo = demoArr.slice();
-    // }, ++delay * state.speed * 4);
+    let demo = demoArr.slice();
     setTimeout(() => {
       console.log("dispatched");
       dispatch({ type: ACTION_TYPES.NUMBERS, payload: demo.slice(0, -1) });
-      collection[j].style.backgroundColor = "blue";
-    }, ++delay * state.speed * 4);
+      collection[j].style.backgroundColor = "orange";
+      if (collection[j + 1].style.backgroundColor !== "orange") {
+        collection[j + 1].style.backgroundColor = "pink";
+      }
+    }, ++delay * state.speed * 2);
     return j;
   }
 
@@ -70,5 +93,5 @@ export function quickSort(demoArr, dispatch, state, setPlay) {
         collection[k].style.backgroundColor = "green";
       }, (k * state.speed) / 2);
     }
-  }, ++delay * state.speed * 4);
+  }, ++delay * state.speed * 2);
 }
