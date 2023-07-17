@@ -51,7 +51,7 @@ export default function selection(demoArr, dispatch, state, setPlay) {
     setTimeout(() => {
       console.log(small);
       collection[small].style.backgroundColor = "blue";
-    }, ++delay * state.speed * 4);
+    }, ++delay * state.speed);
 
     for (let j = i + 1; j < len; j++) {
       let innerSmall = small;
@@ -61,7 +61,7 @@ export default function selection(demoArr, dispatch, state, setPlay) {
           collection[j - 1].style.backgroundColor = "pink";
         }
         collection[j].style.backgroundColor = "red";
-      }, ++delay * state.speed * 4);
+      }, ++delay * state.speed);
 
       if (demoArr[j] < demoArr[smallest]) {
         let prevSmall = smallest;
@@ -88,7 +88,7 @@ export default function selection(demoArr, dispatch, state, setPlay) {
         collection[len - 1].style.backgroundColor = "pink";
       }
       dispatch({ type: ACTION_TYPES.NUMBERS, payload: tempArr });
-    }, ++delay * state.speed * 4);
+    }, ++delay * state.speed);
   }
   // --- different code ends ---
 

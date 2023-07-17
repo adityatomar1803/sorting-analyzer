@@ -1,7 +1,7 @@
 import { ACTION_TYPES } from "../../context/ActionTypes";
 
 function merge(arr, left, mid, right, dispatch) {
-  let collection = document.getElementsByClassName("scraper");
+  // let collection = document.getElementsByClassName("scraper");
   let leftSubArr = arr.slice(left, mid + 1);
   let rightSubArr = arr.slice(mid + 1, right + 1);
 
